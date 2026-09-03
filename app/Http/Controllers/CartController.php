@@ -51,4 +51,49 @@ class CartController extends Controller
 
         return redirect()->route('catalog.show', $product->id)->with('success', 'Produk berhasil ditambahkan ke keranjang.');
     }
+
+    public function index()
+    {
+        $cartItems = CartItem::with('product')
+            ->where('user_id', auth()->id())
+            ->get();
+
+        $total = $cartItems->sum(function ($item) {
+            return $item->price * $item->quantity;
+        });
+
+        return view('cart.index', compact('cartItems', 'total'));
+    }
+
+    public function update(Request $request, CartItem $cartItem)
+    {
+        if ($cartItem->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'quantity' => ['required', 'integer', 'min:1'],
+        ]);
+
+        if ($validated['quantity'] > $cartItem->product->stock) {
+            return back()->withErrors([
+                'quantity' => 'Stok tidak mencukupi. Stok tersedia: ' , $cartItem->product->stock,
+            ]);
+        }
+
+        $cartItem->update(['quantity' => $validated['quantity']]);
+
+        return back()->with('success', 'Jumlah produk berhasil diperbarui.');
+    }
+
+    public function remove(CartItem $cartItem)
+    {
+        if ($cartItem->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $cartItem->delete();
+
+        return back()->with('success', 'Produk berhasil dihapus dari keranjang');
+    }
 }

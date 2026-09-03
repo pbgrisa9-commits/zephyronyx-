@@ -56,8 +56,10 @@
                     <p class="mt-4 text-gray-700">{{ $product->description }}</p>
 
                     @auth
-                        <form action="{{ route('cart.add', $product->id) }}" method="POST" class="mt-6">
+                        <form id="add-to-cart-form" action="{{ route('cart.add', $product->id) }}" method="POST" class="mt-6">
                             @csrf
+
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
 
                             <div class="flex items-center gap-3 mb-4">
                                 <label class="text-sm font-medium text-gray-700">Jumlah:</label>
@@ -73,10 +75,11 @@
                             @endif
 
                             <div class="flex gap-3">
-                                <button type="submit" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700">
+                                <button type="submit" form="add-to-cart-form" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700">
                                     Tambah ke Keranjang
                                 </button>
-                                <button type="submit" class="bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700">
+
+                                <button type="submit" formaction="{{ route('checkout.create') }}" formmethod="GET" class="bg-green-600 text-white px-5 py-2 rounded hover:bg-green-700">
                                     Beli Sekarang
                                 </button>
                             </div>

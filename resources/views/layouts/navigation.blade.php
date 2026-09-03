@@ -12,9 +12,25 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                    @auth
+                        @if (auth()->user()->role === 'admin')
+                            <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                                {{ __('Dashboard') }}
+                            </x-nav-link>
+                        @else
+                            <x-nav-link :href="route('catalog.index')" :active="request()->routeIs('catalog.index')">
+                                {{ __('Katalog') }}
+                            </x-nav-link>
+
+                            <x-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')">
+                                {{ __('Keranjang') }}
+                            </x-nav-link>
+                        @endif
+                    @else
+                        <x-nav-link :href="route('catalog.index')" :active="request()->routeIs('catalog.index')">
+                                {{ __('Katalog') }}
+                            </x-nav-link>
+                    @endauth
                 </div>
             </div>
 
@@ -72,9 +88,25 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
+            @auth
+                @if (auth()->user()->role === 'admin')
+                    <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                                {{ __('Dashboard') }}
+                    </x-responsive-nav-link>
+                @else
+                    <x-responsive-nav-link :href="route('catalog.index')" :active="request()->routeIs('catalog.index')">
+                        {{ __('Katalog') }}
+                    </x-responsive-nav-link>
+
+                    <x-responsive-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')">
+                                {{ __('Keranjang') }}
+                    </x-responsive-nav-link>
+                @endif
+            @else
+                <x-responsive-nav-link :href="route('catalog.index')" :active="request()->routeIs('catalog.index')">
+                    {{ __('Katalog') }}
+                </x-responsive-nav-link>
+            @endauth
         </div>
 
         <!-- Responsive Settings Options -->

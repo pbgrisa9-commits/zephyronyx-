@@ -6,10 +6,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('catalog.index');
 });
 
 Route::get('/dashboard', function () {
@@ -25,6 +26,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::post('/keranjang/tambah/{product}', [CartController::class, 'add'])->name('cart.add');
+    Route::get('/keranjang', [CartController::class, 'index'])->name('cart.index');
+    Route::patch('/keranjang/{cartItem}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/keranjang/{cartItem}', [CartController::class, 'remove'])->name('cart.remove');
+
+    Route::get('/checkout', [CheckoutController::class, 'create'])->name('checkout.create');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 });
 
 Route::middleware('guest')->group(function () {

@@ -8,6 +8,18 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
+            @if (session('success'))
+                <div class="mb-4 bg-green-100 text-green-700 px-4 py-6 rounded text-sm">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="mb-4 bg-red-100 text-red-700 px-4 py-2 rounded text-sm">
+                    {{ session('error') }}
+                </div>
+            @endif
+            
             <form method="GET" action="{{ route('catalog.index') }}" class="bg-white rounded-lg shadow p-4 mb-6 grid grid-cols-1 sm:grid-cols-5 gap-3">
                 <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama produk..." class="border rounded px-3 py-2 text-sm col-span-2">
 
