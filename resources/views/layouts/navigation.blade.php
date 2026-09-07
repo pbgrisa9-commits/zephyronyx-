@@ -25,6 +25,10 @@
                             <x-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')">
                                 {{ __('Keranjang') }}
                             </x-nav-link>
+
+                            <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')">
+                                {{ __('Pesanan saya') }}
+                            </x-nav-link>
                         @endif
                     @else
                         <x-nav-link :href="route('catalog.index')" :active="request()->routeIs('catalog.index')">

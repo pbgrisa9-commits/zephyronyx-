@@ -19,6 +19,14 @@
                 <a href="{{ route('admin.products.index') }}" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700">
                     Kelola Produk
                 </a>
+
+                <a href="{{ route('admin.orders.index') }}" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700">
+                    Kelola Pesanan
+                </a>
+
+                <a href="{{ route('admin.reports.index') }}" class="bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700">
+                    Laporan Penjualan
+                </a>
             </div>
             
         </div>
