@@ -8,6 +8,10 @@
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
 
+            <div class="mb-4">
+                <a href="{{ route('catalog.index') }}" class="text-blue-600 hover:underline text-sm">Kembali ke Katalog</a>
+            </div>
+            
             @if (session('success'))
                 <div class="mb-4 bg-green-100 text-green-700 px-4 py-2 rounded text-sm">
                     {{ session('success') }}

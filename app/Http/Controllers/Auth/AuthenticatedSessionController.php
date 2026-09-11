@@ -30,7 +30,14 @@ class AuthenticatedSessionController extends Controller
 
         
         if (Auth::user()->role === 'admin') {
-            return redirect()->route('admin.dashboard');
+            Auth::guard('web')->logout();
+
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect()->route('admin.login')->withErrors([
+                'email' => 'Akun Admin harus login melalui halaman Login Admin.',
+            ]);
         }
 
         return redirect()->intended(route('catalog.index', absolute: false));

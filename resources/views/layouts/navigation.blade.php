@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('catalog.index') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
@@ -55,9 +55,15 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <x-dropdown-link :href="route('profile.edit')">
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
+                            @if (auth()->user()->role === 'admin')
+                                <x-dropdown-link :href="route('admin.profile.edit')">
+                                    Profile
+                                </x-dropdown-link>
+                            @else
+                                <x-dropdown-link :href="route('profile.edit')">
+                                    Profile
+                                </x-dropdown-link>
+                            @endif
 
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
@@ -105,6 +111,10 @@
                     <x-responsive-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')">
                                 {{ __('Keranjang') }}
                     </x-responsive-nav-link>
+
+                    <x-responsive-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.index')">
+                        {{ __('Pesanan saya') }}
+                    </x-responsive-nav-link>
                 @endif
             @else
                 <x-responsive-nav-link :href="route('catalog.index')" :active="request()->routeIs('catalog.index')">
@@ -122,12 +132,18 @@
                 </div>
 
                 <div class="mt-3 space-y-1">
-                    <x-responsive-nav-link :href="route('profile.edit')">
-                        {{ __('Profile') }}
-                    </x-responsive-nav-link>
+                    @if (auth()->user()->role === 'admin')
+                        <x-responsive-nav-link :href="route('admin.profile.edit')">
+                            {{ __('Profile') }}
+                        </x-responsive-nav-link>
+                    @else
+                        <x-responsive-nav-link :href="route('profile.edit')">
+                            {{ __('Profile') }}
+                        </x-responsive-nav-link>
+                    @endif
 
                     <!-- Authentication -->
-                    <form method="POST" action="{{ route('logout') }}">
+                    <form method="POST" action="{{ route('logout') }}" onsubmit="return confirm('Yakin ingin logout dari akun ini?');">
                         @csrf
 
                         <x-responsive-nav-link :href="route('logout')"
