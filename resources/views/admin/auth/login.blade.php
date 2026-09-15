@@ -7,59 +7,69 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans antialiased bg-slate-900 min-h-screen flex items-center justify-center">
+<body class="font-sans antialiased bg-slate-100 min-h-screen flex items-center justify-center p-4">
 
-    <div class="w-full max-w-md px-4">
+    <div class="w-full max-w-3xl bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col sm:flex-row">
 
-        <div class="text-center mb-6">
-            <h1 class="text-2xl font-bold text-white">ZEPHYRONYX</h1>
-            <p class="text-sm text-slate-400">SPACE Admin Panel</p>
+        <div class="w-full sm:w-2/5 bg-slate-900 text-white p-8 flex flex-col items-center justify-center text-center">
+            <div class="w-16 h-16 rounded-xl bg-blue-600 flex items-center justify-center mb-4">
+                <i class="fa-solid fa-cubes text-2xl"></i>
+            </div>
+            <h1 class="text-xl font-bold tracking-wide">ZEPHYRONYX</h1>
+            <p class="text-xs text-slate-400 tracking-widest mb-6">SPACE</p>
+            
+            <h2 class="text-lg font-semibold">Administrator Login</h2>
+            <p class="text-sm text-slate-400 mt-1">Silahkan masuk untuk mengakses dashboard</p>
         </div>
 
-        <div class="bg-white rounded-xl shadow-2xl border-t-4 border-t-blue-600 overflow-hidden">
-            <div class="bg-blue-50 px-6 py-4 border-b border-blue-100 text-center">
-                <p class="text-sm font-semibold text-blue-800">Login Administrator</p>
-                <p class="text-xs text-blue-600 mt-0.5">Khusus akses admin ZEPHYRONYX SPACE</p>
-            </div>
+        <div class="w-full sm:w-3/5 p-8 sm:p-10">
+            @if (session('status'))
+                <div class="mb-4 bg-green-100 text-green-700 px-4 py-2 rounded-lg text-sm">
+                    {{ session('status') }}
+                </div>
+            @endif
 
-            <div class="p-6">
-                @if (session('status'))
-                    <div class="mb-4 bg-green-100 text-green-700 px-4 py-2 rounded-lg text-sm">
-                        {{ session('status') }}
-                    </div>
-                @endif
-
-                @if ($errors->any())
-                    <div class="mb-4 bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm">
+            @if ($errors->any())
+                <div class="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm flex items-start gap-2">
+                    <i class="fa-solid fa-circle-exclamation mt-0.5"></i>
+                    <div>
                         @foreach ($errors->all() as $error)
                             <p>{{ $error }}</p>
                         @endforeach
                     </div>
-                @endif
+                </div>
+            @endif
                 
-                <form method="POST" action="{{ route('admin.login.store') }}" class="space-y-4">
-                    @csrf
+            <form method="POST" action="{{ route('admin.login.store') }}" class="space-y-4">
+                @csrf
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Email</label>
-                        <input type="email" name="email" value="{{ old('email') }}" required autofocus class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                    </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" name="email" value="{{ old('email') }}" required autofocus class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" name="password" required class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                    </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" name="password" required class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
 
-                    <button type="submit" class="w-full bg-slate-900 text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-slate-800 transition-colors">
-                        LOGIN SEBAGAI ADMIN
-                    </button>
-                </form>
-            </div>
+                <div class="flex items-center justify-between text-sm">
+                    <label class="flex items-center gap-2 text-gray-600">
+                        <input type="checkbox" name="remember" class="rounded border-gray-300 txt-blue-600 focus:ring-blue-500">
+                        Ingat Saya
+                    </label>
+                </div>
+
+                <button type="submit" class="w-full bg-blue-600 text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors mt-2">
+                    LOGIN
+                </button>
+            </form>
+
+            <p class="text-center text-xs text-gray-400 mt-6">
+                <a href="{{ route('login') }}" class="hover:text-gray-600">Bukan admin? Login sebagai pelanggan</a>
+            </p>
+
         </div>
-
-        <p class="ext-center text-xs text-slate-500 mt-6">
-            <a href="{{ route('login') }}" class="hover:text-slate-300">Bukan admin? Login sebagai pelanggan</a>
-        </p>
 
     </div>
 

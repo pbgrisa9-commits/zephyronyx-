@@ -8,7 +8,6 @@
 
     <div class="max-w-4xl mx-auto">
 
-        <!-- Info Pesanan -->
         <div class="bg-white rounded-xl shadow-lg border border-gray-200 border-t-4 border-t-blue-600 p-6 mb-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
                 <div>
@@ -48,7 +47,6 @@
             </div>
         </div>
 
-        <!-- Ubah Status -->
         <div class="bg-white rounded-xl shadow-lg border border-gray-200 border-t-4 border-t-amber-500 p-6 mb-6">
             <h3 class="text-sm font-semibold text-gray-900 mb-3">Ubah Status Pesanan</h3>
 
@@ -69,7 +67,7 @@
             </form>
         </div>
 
-        <!-- Daftar Produk -->
+
         <div class="bg-white rounded-xl shadow-lg border border-gray-200 border-t-4 border-t-green-600 overflow-hidden mb-6">
             <table class="min-w-full text-sm">
                 <thead class="bg-gray-50 text-left">

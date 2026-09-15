@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'Zephyronyz space') }} - Admin</title>
+    <title>{{ config('app.name', 'Zephyronyx Space') }} - Admin</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -21,7 +22,7 @@
             <nav class="flex-1 px-3 py-4 space-y-1">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-3 py-2 rounded text-sm {{ request()->routeIs('admin.dashboard') ? 'bg-blue-600 text-white' : 'hover:bg-slate-800' }}">
                     <i class="fa-solid fa-gauge w-4 text-center"></i>
-                    dashboard
+                    Dashboard
                 </a>
 
                 <a href="{{ route('admin.products.index') }}" class="flex items-center gap-3 px-3 py-2 rounded text-sm {{ request()->routeIs('admin.products.*') ? 'bg-blue-600 text-white' : 'hover:bg-slate-800' }}">
@@ -46,17 +47,17 @@
             </nav>
 
             <div class="px-3 py-4 border-t border-slate-700">
-                <form method="POST" action="{{ route('logout') }}" onsubmit="return confirm('Yakin ingin logout dari akun ini?');">
+                <form id="logout-form" method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="w-full flex items-center gap-3 px-3 py-2 rounded text-sm text-red-400 hover:bg-slate-800">
-                        <i class="fa-solid fa-right-from-bracket w-4 text-center"></i>
-                        Logout
-                    </button>
                 </form>
+
+                <button type="button" onclick="confirmLogout()" class="w-full flex items-center gap-3 px-3 py-2 rounded text-sm text-red-400 hover:bg-slate-800">
+                    <i class="fa-solid fa-right-from-bracket w-4 text-center"></i>
+                    Logout
+                </button>
             </div>
         </aside>
 
-    
         <div class="flex-1 flex flex-col">
             <header class="bg-white border-b px-6 py-4 flex justify-between items-center">
                 <h2 class="font-semibold text-lg text-gray-800">{{ $header ?? 'Dashboard' }}</h2>
@@ -69,5 +70,79 @@
         </div>
 
     </div>
+
+    <style>
+        .zeph-swal-popup {
+            border-radius: 16px !important;
+            padding: 2rem !important;
+        }
+        .zeph-swal-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem auto;
+        }
+        .zeph-swal-icon i {
+            color: #ffffff;
+            font-size: 26px;
+        }
+        .zeph-swal-title {
+            font-weight: 700 !important;
+            color: #0f172a !important;
+            font-size: 1.25rem !important;
+        }
+        .zeph-swal-confirm {
+            background-color: #dc2626 !important;
+            border-radius: 10px !important;
+            font-weight: 600 !important;
+            padding: 0.6rem 1.5rem !important;
+            box-shadow: none !important;
+        }
+        .zeph-swal-cancel {
+            background-color: #f1f5f9 !important;
+            color: #334155 !important;
+            border-radius: 10px !important;
+            font-weight: 600 !important;
+            padding: 0.6rem 1.5rem !important;
+            box-shadow: none !important;
+        }
+    </style>
+
+    <script>
+        function confirmLogout() {
+            Swal.fire({
+                html: `
+                    <div class="zeph-swal-icon">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                    </div>
+                    <h2 style="font-weight:700; color:#0f172a; font-size:1.25rem; margin-top:0.5rem;">
+                        Yakin ingin logout?
+                    </h2>
+                    <p style="color:#64748b; font-size:0.9rem; margin-top:0.5rem;">
+                        Kamu akan keluar dari akun<br><strong>Admin ZEPHYRONYX SPACE</strong>
+                    </p>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Logout',
+                cancelButtonText: 'Batal',
+                reverseButtons: true,
+                buttonsStyling: false,
+                customClass: {
+                    popup: 'zeph-swal-popup',
+                    title: 'zeph-swal-title',
+                    confirmButton: 'zeph-swal-confirm',
+                    cancelButton: 'zeph-swal-cancel'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('logout-form').submit();
+                }
+            });
+        }
+    </script>
 </body>
 </html>
