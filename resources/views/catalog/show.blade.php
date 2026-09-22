@@ -1,18 +1,7 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Detail Produk
-        </h2>
-    </x-slot>
 
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
-
-            <div class="mb-4 text-sm text-gray-500">
-                <a href="{{ route('catalog.index') }}" class="hover:text-blue-600">Katalog</a>
-                <span class="mx-1">/</span>
-                <span class="text-gray-700">{{ $product->name }}</span>
-            </div>
 
             @if ($errors->any())
                 <div class="mb-4 bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm">

@@ -54,6 +54,7 @@ class CheckoutController extends Controller
             'shipping_address' => ['required', 'string'],
             'phone' => ['required', 'string', 'max:20'],
             'payment_method' => ['required', 'string'],
+            'payment_proof' => ['required_if:payment_method,Transfer Bank,E-Wallet', 'nullable', 'image', 'max:2048'],
             'source' => ['required', 'in:cart,direct'],
             'product_id' => ['nullable', 'exists:products,id'],
             'quantity' => ['nullable', 'integer', 'min:1'],
@@ -97,13 +98,19 @@ class CheckoutController extends Controller
             return $item->price * $item->quantity;
         });
 
-        DB::transaction(function () use ($validated, $items, $total) {
+        $proofPath = null;
+        if ($request->hasFile('payment_proof')) {
+            $proofPath = $request->file('payment_proof')->store('payment_proofs', 'public');
+        }
+
+        DB::transaction(function () use ($validated, $items, $total, $proofPath) {
             $order = Order::create([
                 'user_id' => auth()->id(),
                 'recipient_name' => $validated['recipient_name'],
                 'shipping_address' => $validated['shipping_address'],
                 'phone' => $validated['phone'],
                 'payment_method' => $validated['payment_method'],
+                'payment_proof' => $proofPath,
                 'status' => 'diproses',
                 'total_price' => $total,
             ]);

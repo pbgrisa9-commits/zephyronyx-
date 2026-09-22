@@ -1,9 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Keranjang Belanja
-        </h2>
-    </x-slot>
 
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
@@ -18,9 +13,10 @@
 
             @if ($cartItems->isEmpty())
                 <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-10 text-center">
-                    <i class="fa-solid fa-cart-shopping text-4xl text-gray-300 mb-3"></i>
-                    <p class="text-gray-500 mb-3">Keranjang kamu masih kosong.</p>
-                    <a href="{{ route('catalog.index') }}" class="inline-block bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                    <i class="fa-solid fa-cart-shopping text-6xl text-gray-300 mb-4"></i>
+                    <p class="text-gray-500 mb-1">Keranjang kamu masih kosong.</p>
+                    <p class="text-gray-400 text-sm mb-5">Yuk, mulai belanja perlengkapan olahraga favoritmu!</p>
+                    <a href="{{ route('catalog.index') }}" class="inline-block bg-blue-600 text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors">
                         Lihat Katalog Produk
                     </a>
                 </div>

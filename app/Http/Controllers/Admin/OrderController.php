@@ -63,14 +63,14 @@ class OrderController extends Controller
 
         $order->update(['status' => $validated['status']]);
 
-        return back()->with('success', 'Status pesanan berhasil diperbarui.');
+        return redirect()->route('admin.orders.index')->with('success', 'Status pesanan berhasil diperbarui.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Order $order)
-    {
+    { 
         //
     }
 }

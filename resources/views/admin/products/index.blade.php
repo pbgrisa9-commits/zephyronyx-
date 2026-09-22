@@ -1,11 +1,5 @@
 <x-layouts.admin :header="'Kelola Data Produk'">
 
-    @if (session('success'))
-        <div class="mb-4 bg-green-100 text-green-700 px-4 py-2 rounded-lg text-sm">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <div class="flex justify-between items-center mb-4">
         <p class="text-sm text-gray-500">Kelola semua produk yang dijual di toko.</p>
         <a href="{{ route('admin.products.create') }}" class="bg-blue-600 text-white px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors shadow-sm">
@@ -26,7 +20,7 @@
             </thead>
             <tbody class="divide-y divide-gray-100">
                 @forelse ($products as $product)
-                    <tr class="hover:bg-gray-50 transition-colors">
+                    <tr class="hover:bg-gray-5- transition-colors">
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-3">
                                 @if ($product->image)
@@ -36,7 +30,7 @@
                                         {{ strtoupper(substr($product->name, 0, 1)) }}
                                     </div>
                                 @endif
-                                <span class="font-medium text-gray-900">{{ $product->name }}</span>
+                                <Span class="font-medium text-gray-900">{{ $product->name }}</Span>
                             </div>
                         </td>
                         <td class="px-6 py-4 text-gray-600">{{ $product->brand }}</td>
@@ -53,12 +47,11 @@
                         <td class="px-6 py-4">
                             <div class="flex gap-3">
                                 <a href="{{ route('admin.products.edit', $product->id) }}" class="text-blue-600 hover:text-blue-800 font-medium">Edit</a>
-
-                                <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus produk ini?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-800 font-medium">Hapus</button>
-                                </form>
+                                <button type="button"
+                                    onclick="handleDestroy('{{ route('admin.products.destroy', $product->id) }}')"
+                                    class="text-red-600 hover:text-red-800 font-medium">
+                                    Hapus
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -75,4 +68,42 @@
         {{ $products->links() }}
     </div>
 
+    <form id="form-destroy" action="" method="POST" style="display: none;">
+        @csrf
+        @method('DELETE')
+    </form>
+
+    <script>
+        function handleDestroy(url) {
+            Swal.fire({
+                title: 'Apakah kamu yakin?',
+                text: 'Produk yang sudah dihapus tidak bisa dikembalikan!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal',
+                width: '400px'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const form = document.getElementById('form-destroy');
+                    form.action = url;
+                    form.submit();
+                }
+            });
+        }
+
+        @if (session('success'))
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: '{{ session('success') }}',
+                    timer: 3000,
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    width: '400px'
+                });
+            });
+        @endif
+    </script>
 </x-layouts.admin>

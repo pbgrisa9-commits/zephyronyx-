@@ -22,7 +22,7 @@ class AuthController extends Controller
 
         if (! Auth::attempt($creditials)) {
             return back()->withErrors([
-                'email' => 'Email atau password salah.',
+                'email' => 'Email atau password yang anda masukkan salah.',
             ])->onlyInput('email');
         }
 

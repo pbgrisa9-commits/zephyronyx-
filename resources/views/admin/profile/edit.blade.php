@@ -2,20 +2,6 @@
 
     <div class="max-w-2xl mx-auto">
 
-        @if (session('success'))
-            <div class="mb-4 bg-green-100 text-green-700 px-4 py-2 rounded text-sm">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        @if ($errors->any())
-            <div class="mb-4 bg-red-100 text-red-700 px-4 py-2 rounded text:sm">
-                @foreach ($errors->all() as $error)
-                    <p>{{ $error }}</p>
-                @endforeach
-            </div>
-        @endif
-
         <div class="bg-white rounded-xl shadow-lg border border-gray-200 border-t-4 border-t-blue-600 overflow-hidden">
             <div class="bg-blue-50 px-6 py-5 border-b border-blue-100 flex items-center gap-4">
                 <div class="w-14 h-14 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-xl">
@@ -67,4 +53,30 @@
 
     </div>
 
+    <script>
+        @if (session('success'))
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: '{{ session('success') }}',
+                    timer: 3000,
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    width: '400px'
+                });
+            });
+        @endif
+
+        @if ($errors->any())
+            document.addEventListener('DOMContentLoaded', function () {
+                icon: 'error',
+                title: 'Gagal Menyimpan',
+                text: `@foreach ($errors->all() as $error){{ $error }} @endforeach`,
+                confirmButtonText: 'Coba Lagi',
+                width: '400px'
+            });
+        @endif
+    </script>
+    
 </x-layouts.admin>

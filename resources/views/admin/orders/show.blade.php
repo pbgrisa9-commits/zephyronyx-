@@ -1,11 +1,5 @@
 <x-layouts.admin :header="'Detail Pesanan #' . $order->id">
 
-    @if (session('success'))
-        <div class="mb-4 bg-green-100 text-green-700 px-4 py-2 rounded-lg text-sm">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <div class="max-w-4xl mx-auto">
 
         <div class="bg-white rounded-xl shadow-lg border border-gray-200 border-t-4 border-t-blue-600 p-6 mb-6">
@@ -44,29 +38,16 @@
                     <p class="text-gray-500 text-xs uppercase tracking-wide mb-1">Metode Pembayaran</p>
                     <p class="font-medium text-gray-900">{{ $order->payment_method }}</p>
                 </div>
+                @if ($order->payment_proof)
+                    <div class="sm:col-span-2">
+                        <p class="text-gray-500 text-xs uppercase tracking-wide mb-1">Bukti Pembayaran</p>
+                        <button type="button" onclick="openImageModal('{{ asset('storage/' . $order->payment_proof) }}')">
+                            <img src="{{ asset('storage/' . $order->payment_proof) }}" alt="Bukti Pembayaran" class="w-40 h-40 object-cover rounded-lg border border-gray-200 hover:opacity-80 transition-opacity">
+                        </button>
+                    </div>
+                @endif
             </div>
         </div>
-
-        <div class="bg-white rounded-xl shadow-lg border border-gray-200 border-t-4 border-t-amber-500 p-6 mb-6">
-            <h3 class="text-sm font-semibold text-gray-900 mb-3">Ubah Status Pesanan</h3>
-
-            <form action="{{ route('admin.orders.update', $order->id) }}" method="POST" class="flex gap-3 items-center">
-                @csrf
-                @method('PATCH')
-
-                <select name="status" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                    <option value="diproses" {{ $order->status === 'diproses' ? 'selected' : '' }}>Diproses</option>
-                    <option value="dikirim" {{ $order->status === 'dikirim' ? 'selected' : '' }}>Dikirim</option>
-                    <option value="selesai" {{ $order->status === 'selesai' ? 'selected' : '' }}>Selesai</option>
-                    <option value="dibatalkan" {{ $order->status === 'dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
-                </select>
-
-                <button type="submit" class="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
-                    Simpan Status
-                </button>
-            </form>
-        </div>
-
 
         <div class="bg-white rounded-xl shadow-lg border border-gray-200 border-t-4 border-t-green-600 overflow-hidden mb-6">
             <table class="min-w-full text-sm">
@@ -98,8 +79,84 @@
             </div>
         </div>
 
+        <div class="bg-white rounded-xl shadow-lg border border-gray-200 border-t-4 border-t-amber-500 p-6 mb-6">
+            <h3 class="text-sm font-semibold text-gray-900 mb-3">Ubah Status Pesanan</h3>
+
+            <form action="{{ route('admin.orders.update', $order->id) }}" method="POST" class="flex gap-3 items-center" id="form-update-status">
+                @csrf
+                @method('PATCH')
+
+                <select name="status" class="border border-gray-300 rounded-lg px-3 py-2 text-sm bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="diproses" {{ $order->status === 'diproses' ? 'selected' : '' }}>Diproses</option>
+                    <option value="dikirim" {{ $order->status === 'dikirim' ? 'selected' : '' }}>Dikirim</option>
+                    <option value="selesai" {{ $order->status === 'selesai' ? 'selected' : '' }}>Selesai</option>
+                    <option value="dibatalkan" {{ $order->status === 'dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
+                </select>
+
+                <button type="button" onclick="confirmUpdateStatus()" class="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                    Simpan Status
+                </button>
+            </form>
+        </div>
+
+
         <a href="{{ route('admin.orders.index') }}" class="text-blue-600 hover:underline text-sm font-medium">← Kembali ke Kelola Pesanan</a>
 
     </div>
+
+    <div id="image-modal" class="hidden fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4" onclick="closeImageModal(event)">
+        <div class="relative max-w-2xl w-full">
+            <button type="button" onclick="closeImageModal()" class="absolute -top-10 right-0 text-white hover:text-gray-300 text-2xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <img id="image-modal-img" src="" alt="Bukti Pembayaran" class="w-full max-h-[80vh] object-contain rounded-lg shadow-2xl">
+        </div>
+    </div>
+
+    <script>
+        function openImageModal(src) {
+            document.getElementById('image-modal-img').src = src;
+            document.getElementById('image-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal(event) {
+            if (!event || event.target.id === 'image-modal' || event.target.closest('button')) {
+                document.getElementById('image-modal').classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+        
+        function confirmUpdateStatus() {
+            Swal.fire({
+                icon: 'question',
+                title: 'Simpan perubahan status?',
+                text: 'Status pesanan ini akan diperbarui.',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Simpan',
+                cancelButtonText: 'Batal',
+                reverseButtons: true,
+                width: '400px'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('form-update-status').submit();
+                }
+            });
+        }
+
+        @if (session('success'))
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: '{{ session('success') }}',
+                    timer: 3000,
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                    width: '400px'
+                });
+            });
+        @endif
+    </script>
 
 </x-layouts.admin>

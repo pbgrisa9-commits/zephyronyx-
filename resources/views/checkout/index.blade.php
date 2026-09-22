@@ -1,10 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Checkout
-        </h2>
-    </x-slot>
-
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
 
@@ -24,7 +18,7 @@
                         Data Pengiriman
                     </h3>
 
-                    <form action="{{ route('checkout.store') }}" method="POST" id="checkout-form" class="space-y-4">
+                    <form action="{{ route('checkout.store') }}" method="POST" id="checkout-form" class="space-y-4" enctype="multipart/form-data">
                         @csrf
 
                         <input type="hidden" name="source" value="{{ $source }}">
@@ -51,12 +45,27 @@
 
                         <div class="pt-2 border-t border-gray-100">
                             <label class="block text-sm font-medium text-gray-700 mb-1 mt-3">Metode Pembayaran</label>
-                            <select name="payment_method" class="block w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <select name="payment_method" onchange="togglePaymentProof()" class="block w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 <option value="Transfer Bank">Transfer Bank</option>
                                 <option value="COD">COD (Bayar di Tempat)</option>
                                 <option value="E-Wallet">E-Wallet</option>
                             </select>
                         </div>
+
+                        <div id="payment-proof-section" class="bg-blue-50 border border-blue-100 rounded-lg p-4">
+                            <p class="text-sm text-blue-800 font-medium mb-1">
+                                <i class="fa-solid fa-circle-info mr-1"></i> Rekening/Akun Tujuan Pembayaran
+                            </p>
+                            <p class="text-sm text-blue-700 mb-3">
+                                Transfer Bank: BCA 1234567890 a.n. Zephyronyx Space<br>
+                                E-Wallet: 081234567890 a.n. Zephyronyx Space
+                            </p>
+
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Upload Bukti Pembayaran</label>
+                            <input type="file" name="payment_proof" accept="image/*" class="block w-full border border-gray-300 rounded-lg px-3 py-2 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <p class="text-xs text-gray-500 mt-1">Upload screenshot/foto bukti transfer (JPG/PNG, maks 2MB).</p>
+                        </div>
+
 
                         <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors mt-2">
                             Lanjut ke Pembayaran
@@ -97,4 +106,22 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function togglePaymentProof() {
+            const method = document.getElementById('payment-method').value;
+            const section = document.getElementById('payment-proof-section');
+            const fileInput = section.querySelector('input[type="file"]');
+
+            if (method === 'COD') {
+                section.classList.add('hidden');
+                fileInput.required = false;
+            } else {
+                section.classList.remove('hidden');
+                fileInput.required = true;
+            }
+        }
+        document.addEventListener('DOMContentLoaded', togglePaymentProof);
+    </script>
+    
 </x-app-layout>

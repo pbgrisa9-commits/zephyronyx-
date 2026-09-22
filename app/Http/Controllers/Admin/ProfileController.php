@@ -9,7 +9,7 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    public function edit(Request $request): view
+    public function edit(Request $request): View
     {
         return view('admin.profile.edit', [
             'user' => $request->user(),

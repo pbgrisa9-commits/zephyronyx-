@@ -11,132 +11,99 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased bg-slate-100">
-    <div class="flex min-h-screen">
 
-        <aside class="w-64 bg-slate-900 text-slate-300 flex flex-col">
-            <div class="px-6 py-5 border-b border-slate-700">
-                <h1 class="text-white font-bold text-lg">ZEPHYRONYX</h1>
+    <aside class="w-64 bg-slate-900 text-slate-300 flex flex-col fixed inset-y-0 left-0 h-screen z-40">
+        <div class="h-[73px] px-6 border-b border-slate-800 flex items-center gap-2">
+            <img src="{{ asset('images/logo.svg') }}" alt="Zephyronyx Space" class="w-8 h-8">
+            <div>
+                <h1 class="text-white font-bold text-base leading-tight">ZEPHYRONYX</h1>
                 <p class="text-xs text-slate-400">SPACE Admin</p>
             </div>
-
-            <nav class="flex-1 px-3 py-4 space-y-1">
-                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-3 py-2 rounded text-sm {{ request()->routeIs('admin.dashboard') ? 'bg-blue-600 text-white' : 'hover:bg-slate-800' }}">
-                    <i class="fa-solid fa-gauge w-4 text-center"></i>
-                    Dashboard
-                </a>
-
-                <a href="{{ route('admin.products.index') }}" class="flex items-center gap-3 px-3 py-2 rounded text-sm {{ request()->routeIs('admin.products.*') ? 'bg-blue-600 text-white' : 'hover:bg-slate-800' }}">
-                    <i class="fa-solid fa-box w-4 text-center"></i>
-                    Kelola Data Produk
-                </a>
-
-                <a href="{{ route('admin.orders.index') }}" class="flex items-center gap-3 px-3 py-2 rounded text-sm {{ request()->routeIs('admin.orders.*') ? 'bg-blue-600 text-white' : 'hover:bg-slate-800' }}">
-                    <i class="fa-solid fa-bag-shopping w-4 text-center"></i>
-                    Kelola Data Pesanan
-                </a>
-
-                <a href="{{ route('admin.reports.index') }}" class="flex items-center gap-3 px-3 py-2 rounded text-sm {{ request()->routeIs('admin.reports.*') ? 'bg-blue-600 text-white' : 'hover:bg-slate-800' }}">
-                    <i class="fa-solid fa-chart-line w-4 text-center"></i>
-                    Laporan Penjualan
-                </a>
-
-                <a href="{{ route('admin.profile.edit') }}" class="flex items-center gap-3 px-3 py-2 rounded text-sm {{ request()->routeIs('admin.profile.*') ? 'bg-blue-600 text-white' : 'hover:bg-slate-800' }}">
-                    <i class="fa-solid fa-user w-4 text-center"></i>
-                    Profil Saya
-                </a>
-            </nav>
-
-            <div class="px-3 py-4 border-t border-slate-700">
-                <form id="logout-form" method="POST" action="{{ route('logout') }}">
-                    @csrf
-                </form>
-
-                <button type="button" onclick="confirmLogout()" class="w-full flex items-center gap-3 px-3 py-2 rounded text-sm text-red-400 hover:bg-slate-800">
-                    <i class="fa-solid fa-right-from-bracket w-4 text-center"></i>
-                    Logout
-                </button>
-            </div>
-        </aside>
-
-        <div class="flex-1 flex flex-col">
-            <header class="bg-white border-b px-6 py-4 flex justify-between items-center">
-                <h2 class="font-semibold text-lg text-gray-800">{{ $header ?? 'Dashboard' }}</h2>
-                <span class="text-sm text-gray-500">{{ Auth::user()->name }}</span>
-            </header>
-
-            <main class="flex-1 p-6">
-                {{ $slot }}
-            </main>
         </div>
 
-    </div>
+        <nav class="flex-1 px-3 py-4 space-y-1">
+            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-3 py-2 rounded text-sm {{ request()->routeIs('admin.dashboard') ? 'bg-blue-600 text-white' : 'hover:bg-slate-800' }}">
+                <i class="fa-solid fa-gauge w-4 text-center"></i>
+                Dashboard
+            </a>
 
-    <style>
-        .zeph-swal-popup {
-            border-radius: 16px !important;
-            padding: 2rem !important;
-        }
-        .zeph-swal-icon {
-            width: 64px;
-            height: 64px;
-            background: linear-gradient(135deg, #1e293b, #334155);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem auto;
-        }
-        .zeph-swal-icon i {
-            color: #ffffff;
-            font-size: 26px;
-        }
-        .zeph-swal-title {
-            font-weight: 700 !important;
-            color: #0f172a !important;
-            font-size: 1.25rem !important;
-        }
-        .zeph-swal-confirm {
-            background-color: #dc2626 !important;
-            border-radius: 10px !important;
-            font-weight: 600 !important;
-            padding: 0.6rem 1.5rem !important;
-            box-shadow: none !important;
-        }
-        .zeph-swal-cancel {
-            background-color: #f1f5f9 !important;
-            color: #334155 !important;
-            border-radius: 10px !important;
-            font-weight: 600 !important;
-            padding: 0.6rem 1.5rem !important;
-            box-shadow: none !important;
-        }
-    </style>
+            <a href="{{ route('admin.products.index') }}" class="flex items-center gap-3 px-3 py-2 rounded text-sm {{ request()->routeIs('admin.products.*') ? 'bg-blue-600 text-white' : 'hover:bg-slate-800' }}">
+                <i class="fa-solid fa-box w-4 text-center"></i>
+                Kelola Data Produk
+            </a>
+
+            <a href="{{ route('admin.orders.index') }}" class="flex items-center gap-3 px-3 py-2 rounded text-sm {{ request()->routeIs('admin.orders.*') ? 'bg-blue-600 text-white' : 'hover:bg-slate-800' }}">
+                <i class="fa-solid fa-bag-shopping w-4 text-center"></i>
+                Kelola Data Pesanan
+            </a>
+
+            <a href="{{ route('admin.reports.index') }}" class="flex items-center gap-3 px-3 py-2 rounded text-sm {{ request()->routeIs('admin.reports.*') ? 'bg-blue-600 text-white' : 'hover:bg-slate-800' }}">
+                <i class="fa-solid fa-chart-line w-4 text-center"></i>
+                Laporan Penjualan
+            </a>
+
+            <a href="{{ route('admin.profile.edit') }}" class="flex items-center gap-3 px-3 py-2 rounded text-sm {{ request()->routeIs('admin.profile.*') ? 'bg-blue-600 text-white' : 'hover:bg-slate-800' }}">
+                <i class="fa-solid fa-user w-4 text-center"></i>
+                Profil Saya
+            </a>
+
+            <a href="{{ route('catalog.index') }}" target="_blank" class="flex items-center gap-3 px-3 py-2 rounded text-sm hover:bg-slate-800 text-amber-300">
+                <i class="fa-solid fa-arrow-up-right-from-square w-4 tetx-center"></i>
+                Lihat Katalog
+            </a>
+        </nav>
+    </aside>
+
+    <header class="h-[73px] bg-[#0f172a] border-b border-slate-800 px-6 flex justify-between items-center fixed top-0 left-64 right-0 z-30">
+        <h2 class="font-semibold text-lg text-white">{{ $header ?? 'Dashboard' }}</h2>
+
+        <form id="logout-form" method="POST" action="{{ route('logout') }}" class="hidden">
+            @csrf
+        </form>
+
+        <div class="flex items-center gap-5">
+
+            <x-dropdown align="right" width="48">
+                <x-slot name="trigger">
+                    <button type="button" class="flex items-center gap-2 text-slate-300 hover:text-white transition-colors">
+                        <span class="flex items-center justify-center w-8 h-8 rounded-full bg-slate-700">
+                            <i class="fa-solid fa-user text-sm"></i>
+                        </span>
+                        <span class="text-sm">
+                            <span class="block font-medium text-white leading-tight">{{ Auth::user()->name }}</span>
+                            <span class="block text-[11px] text-slate-400 leading-tight">Admin</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    </button>
+                </x-slot>
+
+                <x-slot name="content">
+                    <x-dropdown-link :href="route('admin.profile.edit')">
+                        {{ __('Profil Saya') }}
+                    </x-dropdown-link>
+                    <button type="button" onclick="confirmLogout()" class="w-full text-left block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 transition-colors">
+                        {{ __('Logout') }}
+                    </button>
+                </x-slot>
+            </x-dropdown>
+        </div>
+    </header>
+
+    <main class="ml-64 pt-[97px] px-6 pb-6 min-h-screen">
+        {{ $slot }}
+    </main>
 
     <script>
         function confirmLogout() {
             Swal.fire({
-                html: `
-                    <div class="zeph-swal-icon">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                    </div>
-                    <h2 style="font-weight:700; color:#0f172a; font-size:1.25rem; margin-top:0.5rem;">
-                        Yakin ingin logout?
-                    </h2>
-                    <p style="color:#64748b; font-size:0.9rem; margin-top:0.5rem;">
-                        Kamu akan keluar dari akun<br><strong>Admin ZEPHYRONYX SPACE</strong>
-                    </p>
-                `,
+                icon: 'warning',
+                title: 'Yakin ingin logout?',
+                text: 'Kamu akan keluar dari akun Admin ZEPHYRONYX SPACE.',
                 showCancelButton: true,
                 confirmButtonText: 'Ya, Logout',
                 cancelButtonText: 'Batal',
                 reverseButtons: true,
-                buttonsStyling: false,
-                customClass: {
-                    popup: 'zeph-swal-popup',
-                    title: 'zeph-swal-title',
-                    confirmButton: 'zeph-swal-confirm',
-                    cancelButton: 'zeph-swal-cancel'
-                }
+                width: '400px'
             }).then((result) => {
                 if (result.isConfirmed) {
                     document.getElementById('logout-form').submit();

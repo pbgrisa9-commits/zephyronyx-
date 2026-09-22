@@ -35,8 +35,8 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'brand' => ['required', 'string', 'max:255'],
-            'age_category' => ['required', 'in:dewasa,remaja,anak'],
-            'gender' => ['required', 'in:pria,wanita'],
+            'age_category' => ['nullable', 'in:dewasa,remaja,anak'],
+            'gender' => ['nullable', 'in:pria,wanita'],
             'sport_category' => ['required', 'string', 'max:255'],
             'price' => ['required', 'numeric', 'min:0'],
             'stock' => ['required', 'integer', 'min:0'],
@@ -44,6 +44,20 @@ class ProductController extends Controller
             'size' => ['nullable', 'string', 'max:50'],
             'color' => ['nullable', 'string', 'max:50'],
             'image' => ['nullable', 'image', 'max:2048'],
+        ], [
+            'name.required' => 'Nama produk wajib diisi.',
+            'brand.required' => 'Brand wajib diisi.',
+            'age_category.in' => 'Kategori usia tidak valid.',
+            'gender_in' => 'Jenis kelamin tidak valid.',
+            'sport_category.required' => 'Cabang olahraga wajib diisi.',
+            'price.required' => 'Harga wajib diisi.',
+            'price.numeric' => 'Harga harus berupa angka.',
+            'price.min' => 'Harga tidak boleh negatif.',
+            'stock.required' => 'Stok wajib diisi.',
+            'stock integer' => 'Stok harus berupa angka bulat.',
+            'stock.min' => 'Stok tidak boleh negatif.',
+            'image.image' => 'File harus berupa gambar.',
+            'image.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
         if ($request->hasFile('image')) {
@@ -79,8 +93,8 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'brand' => ['required', 'string', 'max:255'],
-            'age_category' => ['required', 'in:dewasa,remaja,anak'],
-            'gender' => ['required', 'in:pria,wanita'],
+            'age_category' => ['nullable', 'in:dewasa,remaja,anak'],
+            'gender' => ['nullable', 'in:pria,wanita'],
             'sport_category' => ['required', 'string', 'max:255'],
             'price' => ['required', 'numeric', 'min:0'],
             'stock' => ['required', 'integer', 'min:0'],
@@ -88,6 +102,20 @@ class ProductController extends Controller
             'size' => ['nullable', 'string', 'max:50'],
             'color' => ['nullable', 'string', 'max:50'],
             'image' => ['nullable', 'image', 'max:2048'],
+        ], [
+            'name.required' => 'Nama produk wajib diisi.',
+            'brand.required' => 'Brand wajib diisi.',
+            'age_category.in' => 'Kategori usia tidak valid.',
+            'gender_in' => 'Jenis kelamin tidak valid.',
+            'sport_category.required' => 'Cabang olahraga wajib diisi.',
+            'price.required' => 'Harga wajib diisi.',
+            'price.numeric' => 'Harga harus berupa angka.',
+            'price.min' => 'Harga tidak boleh negatif.',
+            'stock.required' => 'Stok wajib diisi.',
+            'stock integer' => 'Stok harus berupa angka bulat.',
+            'stock.min' => 'Stok tidak boleh negatif.',
+            'image.image' => 'File harus berupa gambar.',
+            'image.max' => 'Ukuran gambar maksimal 2MB.',
         ]);
 
         if ($request->hasFile('image')) {
