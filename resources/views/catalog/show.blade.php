@@ -1,15 +1,8 @@
-<x-app-layout>
+@extends('layouts.app')
 
+@section('content')
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
-
-            @if ($errors->any())
-                <div class="mb-4 bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm">
-                    @foreach ($errors->all() as $error)
-                        <p>{{ $error }}</p>
-                    @endforeach
-                </div>
-            @endif
 
             <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
 
@@ -117,7 +110,9 @@
             -moz-appearance: textfield;
         }
     </style>
+@endsection
 
+@section('scripts')
     <script>
         function increaseQty() {
             const input = document.getElementById('qty-input');
@@ -128,5 +123,18 @@
             const input = document.getElementById('qty-input');
             if (parseInt(input.value) > 1) input.value = parseInt(input.value) - 1;
         }
+
+        @if ($errors->any())
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal',
+                        text: `@foreach ($errors->all() as $error){{ $error }} @endforeach`,
+                        confirmButtonText: 'Coba Lagi',
+                        width: '400px'
+                    });
+                });
+        @endif
     </script>
-</x-app-layout>
+
+@endsection

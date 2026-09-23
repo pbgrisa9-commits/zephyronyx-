@@ -1,5 +1,9 @@
-<x-layouts.admin :header="'Kelola Data Pesanan'">
+@extends('layouts.admin')
 
+@section('title', 'Kelola Data Pesanan - Admin')
+@section('header', 'Kelola Data Pesanan')
+
+@section('content')
     <p class="text-sm text-gray-500 mb-4">Kelola dan pantau status semua pesanan pelanggan.</p>
 
     <div class="bg-white rounded-xl shadow-lg border border-gray-200 border-t-4 border-t-blue-600 overflow-hidden">
@@ -71,4 +75,4 @@
         </script>
     @endif
     
-</x-layouts.admin>
+@endsection

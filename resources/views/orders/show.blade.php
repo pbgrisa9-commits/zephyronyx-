@@ -1,10 +1,12 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Detail Pesanan #{{ $order->id }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
+@section('header')
+    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        Detail Pesanan #{{ $order->id }}
+    </h2>
+@endsection
+
+@section('content')
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
 
@@ -15,12 +17,12 @@
             </div>
 
             <div class="bg-white rounded-xl shadow-lg border border-gray-200 border-t-4 border-t-blue-600 p-6 mb-6">
-                <div class="flex jusify-between items-center">
+                <div class="flex justify-between items-center">
                     <div>
                         <p class="text-xs text-gray-400 uppercase tracking-wide">Status Pesanan</p>
                         <span class="inline-block mt-1 px-3 py-1 rounded-full text-sm font-semibold
                             @if ($order->status === 'diproses') bg-amber-100 text-amber-700
-                            @elseif ($order->status === 'dikirim') bg-blue-100 text-amber-700
+                            @elseif ($order->status === 'dikirim') bg-blue-100 text-blue-700
                             @elseif ($order->status === 'selesai') bg-green-100 text-green-700
                             @else bg-red-100 text-red-700
                             @endif">
@@ -70,7 +72,7 @@
 
                             <div class="flex-1">
                                 <p class="font-medium text-gray-900">{{ $item->product->name }}</p>
-                                <p class="text-xs text-gray-400">{{ $item->size ?? '-' }} / {{ $item->color ?? '-' }} $middot; {{ $item->quantity }} x Rp {{ number_format($item->price, 0, ',', '.') }}</p>
+                                <p class="text-xs text-gray-400">{{ $item->size ?? '-' }} / {{ $item->color ?? '-' }} &middot; {{ $item->quantity }} x Rp {{ number_format($item->price, 0, ',', '.') }}</p>
                             </div>
                         
                             <p class="font-medium text-gray-900">Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}</p>
@@ -86,4 +88,4 @@
 
         </div>
     </div>
-</x-app-layout>
+@endsection

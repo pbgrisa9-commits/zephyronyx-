@@ -1,4 +1,9 @@
-<x-layouts.admin :header="'Dashboard Admin'">
+@extends('layouts.admin')
+
+@section('title', 'Dashboard Admin - Zephyronyx Space')
+@section('header', 'Dashboard Admin')
+
+@section('content')
 
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
 
@@ -33,7 +38,7 @@
                     <p class="text-2xl font-bold text-gray-900 mt-1">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</p>
                 </div>
                 <div class="w-12 h-12 flex items-center justify-center rounded-full bg-green-100">
-                    <i class="fa-solid fa-sack-dollar text-green-600 tex-xl"></i>
+                    <i class="fa-solid fa-sack-dollar text-green-600 text-xl"></i>
                 </div>
             </div>
         </div>
@@ -93,7 +98,7 @@
                             <td class="px-6 py-4 font-medium text-gray-900">#{{ $order->id }}</td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-2">
-                                    <div class="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-semibold text-xs">
+                                    <div class="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold text-xs">
                                         {{ strtoupper(substr($order->user->name, 0, 1)) }}
                                     </div>
                                     <span class="text-gray-700">{{ $order->user->name }}</span>
@@ -102,7 +107,7 @@
                             <td class="px-6 py-4 text-gray-500">{{ $order->created_at->format('d M Y, H:i') }}</td>
                             <td class="px-6 py-4 font-medium text-gray-900">Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
                             <td class="px-6 py-4">
-                                <span class="inline-flex items-center px-4 py-1 rounded-full text-xs font-semibold
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
                                     @if ($order->status === 'diproses') bg-amber-100 text-amber-700
                                     @elseif ($order->status === 'dikirim') bg-blue-100 text-blue-700
                                     @elseif ($order->status === 'selesai') bg-green-100 text-green-700
@@ -121,4 +126,4 @@
         @endif
     </div>
     
-</x-layouts.admin>
+@endsection

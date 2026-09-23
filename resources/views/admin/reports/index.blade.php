@@ -1,9 +1,14 @@
-<x-layouts.admin :header="'Laporan Penjualan'">
-    
+@extends('layouts.admin')
+
+@section('title', 'Laporan Penjualan - Admin')
+@section('header', 'Laporan Penjualan')
+
+@section('content')
+
     <div class="max-w-5xl mx-auto">
 
         <div class="bg-white rounded-xl shadow-lg border border-gray-200 border-t-4 border-t-blue-600 p-6 mb-6">
-            <h3 clas="text-sm font-semibold text-gray-900 mb-4">Filter Periode</h3>
+            <h3 class="text-sm font-semibold text-gray-900 mb-4">Filter Periode</h3>
     
             <form method="GET" action="{{ route('admin.reports.index') }}" class="flex flex-wrap gap-3 items-end">
                 <div>
@@ -25,7 +30,7 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-            <div class="bg-white rounded-lg border border-gray-200 border-t-4 border-t-amber-500 p-6">
+            <div class="bg-white rounded-xl shadow-lg border border-gray-200 border-t-4 border-t-amber-500 p-6">
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-500">Jumlah Pesanan</p>
@@ -91,4 +96,4 @@
 
     </div>
 
-</x-layouts.admin>
+@endsection

@@ -28,6 +28,6 @@ class ReportController extends Controller
         $totalOrders = $orders->count();
         $totalRevenue = $orders->sum('total_price');
 
-        return view('admin.reports.index', compact ('orders', 'totalOrders', 'totalRevenue', 'startDate', 'endDate'));
+        return view('admin.reports.index', compact('orders', 'totalOrders', 'totalRevenue', 'startDate', 'endDate'));
     }
 }

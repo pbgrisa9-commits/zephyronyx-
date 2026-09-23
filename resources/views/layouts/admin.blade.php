@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'Zephyronyx Space') }} - Admin</title>
-
+    <title>@yield('title', config('app.name', 'Zephyronyx Space') . ' - Admin')</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -48,14 +48,14 @@
             </a>
 
             <a href="{{ route('catalog.index') }}" target="_blank" class="flex items-center gap-3 px-3 py-2 rounded text-sm hover:bg-slate-800 text-amber-300">
-                <i class="fa-solid fa-arrow-up-right-from-square w-4 tetx-center"></i>
+                <i class="fa-solid fa-arrow-up-right-from-square w-4 text-center"></i>
                 Lihat Katalog
             </a>
         </nav>
     </aside>
 
     <header class="h-[73px] bg-[#0f172a] border-b border-slate-800 px-6 flex justify-between items-center fixed top-0 left-64 right-0 z-30">
-        <h2 class="font-semibold text-lg text-white">{{ $header ?? 'Dashboard' }}</h2>
+        <h2 class="font-semibold text-lg text-white">@yield('header', 'Dashboard')</h2>
 
         <form id="logout-form" method="POST" action="{{ route('logout') }}" class="hidden">
             @csrf
@@ -90,7 +90,7 @@
     </header>
 
     <main class="ml-64 pt-[97px] px-6 pb-6 min-h-screen">
-        {{ $slot }}
+        @yield('content')
     </main>
 
     <script>
@@ -111,5 +111,65 @@
             });
         }
     </script>
+
+    @if (session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+                timer: 3000,
+                showConfirmButton: false,
+                timerProgressBar: true,
+                width: '400px'
+            });
+        });
+    </script>
+    @endif
+
+    @if (session('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: '{{ session('error') }}',
+                confirmButtonColor: '#2563eb',
+                width: '400px'
+            });
+        });
+    </script>
+    @endif
+
+    @if (session('warning'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Perhatian',
+                text: '{{ session('warning') }}',
+                confirmButtonColor: '#f59e0b',
+                width: '400px'
+            });
+        });
+    </script>
+    @endif
+
+    @if ($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Validasi Gagal',
+                html: `{!! implode('<br>', $errors->all()) !!}`,
+                confirmButtonColor: '#2563eb',
+                width: '400px'
+            });
+        });
+    </script>
+    @endif
+
+    @yield('scripts')
 </body>
 </html>

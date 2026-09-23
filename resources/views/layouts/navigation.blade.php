@@ -18,7 +18,6 @@
             <!-- Navigation Links (desktop) -->
             <div class="hidden sm:flex sm:items-center sm:gap-6">
                 @auth
-                    <!-- Beranda -->
                     <a href="{{ route('catalog.index') }}" class="text-sm text-slate-300 hover:text-white transition-colors" title="Beranda">
                         <i class="fa-solid fa-house mr-1"></i> Beranda
                     </a>
@@ -29,12 +28,10 @@
                         </a>
                     @endif
 
-                    <!-- Keranjang -->
                     <a href="{{ route('cart.index') }}" class="relative text-slate-300 hover:text-white transition-colors" title="Keranjang">
                         <i class="fa-solid fa-cart-shopping text-lg"></i>
                     </a>
 
-                    <!-- Pesanan -->
                     <a href="{{ route('orders.index') }}" class="relative text-slate-300 hover:text-white transition-colors" title="Pesanan Saya">
                         <i class="fa-solid fa-receipt text-lg"></i>
                     </a>
@@ -128,18 +125,3 @@
         @endauth
     </div>
 </nav>
-
-@if (session('success'))
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        Swal.fire({
-            icon: 'success',
-            title: 'Berhasil!', 
-            text: '{{ session('success') }}',
-            timer: 3000,
-            showConfirmButton: false,
-            timerProgressBar: true
-        });
-    });
-</script>
-@endif

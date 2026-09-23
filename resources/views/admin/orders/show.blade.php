@@ -1,5 +1,9 @@
-<x-layouts.admin :header="'Detail Pesanan #' . $order->id">
+@extends('layouts.admin')
 
+@section('title', 'Detail Pesanan #' . $order->id . ' - Admin')
+@section('header', 'Detail Pesanan #' . $order->id)
+
+@section('content')
     <div class="max-w-4xl mx-auto">
 
         <div class="bg-white rounded-xl shadow-lg border border-gray-200 border-t-4 border-t-blue-600 p-6 mb-6">
@@ -144,19 +148,5 @@
             });
         }
 
-        @if (session('success'))
-            document.addEventListener('DOMContentLoaded', function () {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil!',
-                    text: '{{ session('success') }}',
-                    timer: 3000,
-                    showConfirmButton: false,
-                    timerProgressBar: true,
-                    width: '400px'
-                });
-            });
-        @endif
     </script>
-
-</x-layouts.admin>
+@endsection

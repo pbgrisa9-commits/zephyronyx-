@@ -1,5 +1,6 @@
-<x-app-layout>
+@extends('layouts.app')
 
+@section('content')
     <div class="py-8 bg-gray-50 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
@@ -12,7 +13,6 @@
                 @endif
 
                 @php
-                    // Tentukan tab mana yang sedang aktif
                     $activeTab = 'semua';
                     if (request()->filled('sport_category')) $activeTab = 'cabor';
                     if (request()->filled('brand')) $activeTab = 'brand';
@@ -21,27 +21,24 @@
                     $baseNoBrandSport = request()->except(['brand', 'sport_category', 'search', 'page']);
                 @endphp
 
-                <!-- Tab bar + Search -->
                 <div class="bg-white rounded-xl shadow-lg border border-gray-200 border-t-4 border-t-blue-600 p-5 mb-4">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 
-                        <!-- Tabs -->
                         <div class="flex items-center gap-6" id="tab-bar">
                             <a href="{{ route('catalog.index', request()->except(['sport_category','brand','page'])) }}"
-                               class="filter-link tab-item pb-1 text-sm font-semibold {{ $activeTab == 'semua' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700' }}">
+                                class="filter-link tab-item pb-1 text-sm font-semibold {{ $activeTab == 'semua' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700' }}">
                                 Semua Produk
                             </a>
                             <button type="button" data-tab="cabor"
-                               class="tab-toggle pb-1 text-sm font-semibold {{ $activeTab == 'cabor' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700' }}">
+                                class="tab-toggle pb-1 text-sm font-semibold {{ $activeTab == 'cabor' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700' }}">
                                 Cabang Olahraga
                             </button>
                             <button type="button" data-tab="brand"
-                               class="tab-toggle pb-1 text-sm font-semibold {{ $activeTab == 'brand' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700' }}">
+                                class="tab-toggle pb-1 text-sm font-semibold {{ $activeTab == 'brand' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-gray-500 hover:text-gray-700' }}">
                                 Brand
                             </button>
                         </div>
 
-                        <!-- Search -->
                         @if ($activeTab == 'semua')
                             <form method="GET" action="{{ route('catalog.index') }}" class="ajax-form flex gap-2 w-full sm:w-auto">
                                 <input type="text" name="search" 
@@ -54,36 +51,34 @@
                         @endif
                     </div>
 
-                    <!-- Panel: Cabang Olahraga -->
                     <div id="panel-cabor" class="mt-4 flex flex-wrap gap-2 {{ $activeTab == 'cabor' ? '' : 'hidden' }}">
                         <a href="{{ route('catalog.index', array_merge($baseNoSportBrand, ['sport_category' => ''])) }}"
-                           class="filter-link px-3 py-1.5 rounded-full text-xs font-medium border {{ request('sport_category', '') == '' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50' }}">
+                            class="filter-link px-3 py-1.5 rounded-full text-xs font-medium border {{ request('sport_category', '') == '' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50' }}">
                             Semua Cabang
                         </a>
                         @foreach ($sportCategories as $sport)
                             <a href="{{ route('catalog.index', array_merge($baseNoSportBrand, ['sport_category' => $sport])) }}"
-                               class="filter-link px-3 py-1.5 rounded-full text-xs font-medium border {{ request('sport_category') == $sport ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50' }}">
+                                class="filter-link px-3 py-1.5 rounded-full text-xs font-medium border {{ request('sport_category') == $sport ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50' }}">
                                 {{ $sport }}
                             </a>
                         @endforeach
                     </div>
 
-                    <!-- Panel: Brand -->
                     <div id="panel-brand" class="mt-4 flex flex-wrap gap-2 {{ $activeTab == 'brand' ? '' : 'hidden' }}">
                         <a href="{{ route('catalog.index', array_merge($baseNoBrandSport, ['brand' => ''])) }}"
-                           class="filter-link px-3 py-1.5 rounded-full text-xs font-medium border {{ request('brand', '') == '' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50' }}">
+                            class="filter-link px-3 py-1.5 rounded-full text-xs font-medium border {{ request('brand', '') == '' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50' }}">
                             Semua Brand
                         </a>
                         @foreach ($brands as $brand)
                             <a href="{{ route('catalog.index', array_merge($baseNoBrandSport, ['brand' => $brand])) }}"
-                               class="filter-link px-3 py-1.5 rounded-full text-xs font-medium border {{ request('brand') == $brand ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50' }}">
+                                class="filter-link px-3 py-1.5 rounded-full text-xs font-medium border {{ request('brand') == $brand ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-50' }}">
                                 {{ $brand }}
                             </a>
                         @endforeach
                     </div>
                 </div>
 
-                <!-- Grid Produk (full width, 4 kolom) -->
+                
                 @if ($products->isEmpty())
                     <p class="bg-white rounded-xl shadow-lg border border-gray-200 p-10 text-center text-gray-500">
                         Belum ada produk tersedia.
@@ -130,7 +125,9 @@
 
         </div>
     </div>
+@endsection
 
+@section('scripts')
     <script>
     (function () {
         const container = document.getElementById('catalog-app');
@@ -150,7 +147,6 @@
                         caborPanel.classList.add('hidden');
                     }
 
-                    // Update highlight tab (visual only, tidak filter apa-apa sampai user pilih chip)
                     container.querySelectorAll('.tab-toggle, .tab-item').forEach(function (el) {
                         el.classList.remove('text-blue-600', 'border-b-2', 'border-blue-600');
                         el.classList.add('text-gray-500');
@@ -209,4 +205,4 @@
         bindEvents();
     })();
     </script>
-</x-app-layout>
+@endsection

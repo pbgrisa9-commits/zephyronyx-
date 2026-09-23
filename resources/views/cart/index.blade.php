@@ -1,15 +1,14 @@
-<x-app-layout>
+@extends('layouts.app')
 
+@section('header')
+    <h2 class="font-semibold tetx-xl text-gray-800 leading-tight">
+        Keranjang 
+    </h2>
+@endsection
+
+@section('content')
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
-
-            @if ($errors->any())
-                <div class="mb-4 bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm">
-                    @foreach ($errors->all() as $error)
-                        <p>{{ $error }}</p>
-                    @endforeach
-                </div>
-            @endif
 
             @if ($cartItems->isEmpty())
                 <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-10 text-center">
@@ -62,13 +61,13 @@
                                     </td>
                                     <td class="px-6 py-4 font-medium text-gray-900">Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}</td>
                                     <td class="px-6 py-4">
-                                        <form action="{{ route('cart.remove', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus produk ini dari keranjang?');">
+                                        <form id="remove-form-{{ $item->id }}" action="{{ route('cart.remove', $item->id) }}" method="POST" class="hidden">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="text-red-500 hover:text-red-700">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
                                         </form>
+                                        <button type="button" onclick="confirmRemove({{ $item->id }})" class="text-red-500 hover:text-red-700">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -95,4 +94,36 @@
 
         </div>
     </div>
-</x-app-layout>
+@endsection
+
+@section('scripts')
+    <script>
+        function confirmRemove(itemId) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Yakin ingin menghapus',
+                text: 'Produk ini akan dihapus dari keranjang.',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Hapus',
+                cancelButtonText: 'Batal',
+                reverseButtons: true,
+                width: '400px'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('remove-form-' + itemId).submit();
+                }
+            });
+        }
+
+        @if ($errors->any())
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: `@foreach ($errors->all() as $error){{ $error }} @endforeach`,
+                    width: '400px'
+                });
+            });
+        @endif
+    </script>
+@endsection

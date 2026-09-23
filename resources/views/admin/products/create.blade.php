@@ -1,4 +1,9 @@
-<x-layouts.admin :header="'Tambah Produk'">
+@extends('layouts.admin')
+
+@section('title', 'Tambah Produk - Admin')
+@section('header', 'Tambah Produk')
+
+@section('content')
 
     <div class="max-w-3xl mx-auto">
 
@@ -12,12 +17,12 @@
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Nama Produk</label>
-                    <input type="text" name="name" value="{{ old('name') }}" class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <input type="text" name="name" value="{{ old('name') }}" required class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Brand</label>
-                    <input type="text" name="brand" value="{{ old('brand') }}" class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <input type="text" name="brand" value="{{ old('brand') }}" required class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
@@ -49,12 +54,12 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Harga</label>
-                        <input type="number" name="price" value="{{ old('price') }}" class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <input type="number" name="price" value="{{ old('price') }}" required class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Stok</label>
-                        <input type="number" name="stock" value="{{ old('stock') }}" class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <input type="number" name="stock" value="{{ old('stock') }}" required class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     </div>
                 </div>
 
@@ -93,17 +98,4 @@
 
     </div>
 
-    @if ($errors->any())
-        <script>
-            document.addEventListener('DOMContentLoaded',function () {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal Menyimpan',
-                    text: `@foreach ($errors->all() as $error){{ $error }} @endforeach`,
-                    confirmButtonText: 'Coba Lagi',
-                    width: '400px'
-                });
-            });
-        </script>
-    @endif
-</x-layouts.admin>
+@endsection

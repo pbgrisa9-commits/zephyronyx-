@@ -1,14 +1,8 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
-
-            @if ($errors->any())
-                <div class="mb-4 bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm">
-                    @foreach ($errors->all() as $error)
-                        <p>{{ $error }}</p>
-                    @endforeach
-                </div>
-            @endif
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
@@ -45,7 +39,7 @@
 
                         <div class="pt-2 border-t border-gray-100">
                             <label class="block text-sm font-medium text-gray-700 mb-1 mt-3">Metode Pembayaran</label>
-                            <select name="payment_method" onchange="togglePaymentProof()" class="block w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <select name="payment_method" id="payment-method" onchange="togglePaymentProof()" class="block w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                 <option value="Transfer Bank">Transfer Bank</option>
                                 <option value="COD">COD (Bayar di Tempat)</option>
                                 <option value="E-Wallet">E-Wallet</option>
@@ -106,7 +100,9 @@
             </div>
         </div>
     </div>
+@endsection
 
+@section('scripts')
     <script>
         function togglePaymentProof() {
             const method = document.getElementById('payment-method').value;
@@ -122,6 +118,17 @@
             }
         }
         document.addEventListener('DOMContentLoaded', togglePaymentProof);
-    </script>
     
-</x-app-layout>
+        @if ($errors->any())
+            document.addEventListener('DOMContentLoaded', function () {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: `@foreach ($errors->all() as $error){{ $error }}@endforeach`,
+                    width: '400px'
+                });
+            });
+        @endif
+    </script>
+        
+@endsection

@@ -1,4 +1,9 @@
-<x-layouts.admin :header="'Kelola Data Produk'">
+@extends('layouts.admin')
+
+@section('title', 'Kelola Data Produk - Admin')
+@section('header', 'Kelola Data Produk')
+
+@section('content')
 
     <div class="flex justify-between items-center mb-4">
         <p class="text-sm text-gray-500">Kelola semua produk yang dijual di toko.</p>
@@ -20,7 +25,7 @@
             </thead>
             <tbody class="divide-y divide-gray-100">
                 @forelse ($products as $product)
-                    <tr class="hover:bg-gray-5- transition-colors">
+                    <tr class="hover:bg-gray-50 transition-colors">
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-3">
                                 @if ($product->image)
@@ -30,7 +35,7 @@
                                         {{ strtoupper(substr($product->name, 0, 1)) }}
                                     </div>
                                 @endif
-                                <Span class="font-medium text-gray-900">{{ $product->name }}</Span>
+                                <span class="font-medium text-gray-900">{{ $product->name }}</Span>
                             </div>
                         </td>
                         <td class="px-6 py-4 text-gray-600">{{ $product->brand }}</td>
@@ -91,19 +96,6 @@
                 }
             });
         }
-
-        @if (session('success'))
-            document.addEventListener('DOMContentLoaded', function () {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil',
-                    text: '{{ session('success') }}',
-                    timer: 3000,
-                    showConfirmButton: false,
-                    timerProgressBar: true,
-                    width: '400px'
-                });
-            });
-        @endif
     </script>
-</x-layouts.admin>
+
+@endsection
