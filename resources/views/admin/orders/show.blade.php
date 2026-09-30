@@ -116,7 +116,9 @@
             <img id="image-modal-img" src="" alt="Bukti Pembayaran" class="w-full max-h-[80vh] object-contain rounded-lg shadow-2xl">
         </div>
     </div>
+@endsection
 
+@section('scripts')
     <script>
         function openImageModal(src) {
             document.getElementById('image-modal-img').src = src;

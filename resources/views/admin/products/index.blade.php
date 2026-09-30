@@ -77,7 +77,9 @@
         @csrf
         @method('DELETE')
     </form>
+@endsection
 
+@section('scripts')
     <script>
         function handleDestroy(url) {
             Swal.fire({

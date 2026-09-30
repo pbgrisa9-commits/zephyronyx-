@@ -38,7 +38,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">Jenis Kelamin</label>
+                        <label class="block text-sm font-medium text-gray-700">Gender</label>
                         <select name="gender" class="mt-1 block w-full border border-gray-300 rounded-lg px-3 py-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                             <option value="" {{ old('gender', $product->gender) == '' ? 'selected' : '' }}>Semua Gender</option>
                             <option value="pria" {{ old('gender', $product->gender) == 'pria' ? 'selected' : '' }}>Pria</option>

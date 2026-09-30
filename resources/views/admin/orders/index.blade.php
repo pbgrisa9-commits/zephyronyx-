@@ -58,21 +58,5 @@
     <div class="mt-4">
         {{ $orders->links() }}
     </div>
-
-    @if (session('success'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil!',
-                    text: '{{ session('success') }}',
-                    timer: 3000,
-                    showConfirmButton: false,
-                    timerProgressBar: true,
-                    width: '400px'
-                });
-            });
-        </script>
-    @endif
     
 @endsection

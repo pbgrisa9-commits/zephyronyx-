@@ -6,13 +6,13 @@
 
             <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
 
-                @if ($product->image)
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-96 object-cover rounded-lg">
-                @else
-                    <div class="w-full h-96 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400">
-                        <i class="fa-solid fa-image text-4xl"></i>
-                    </div>
-                @endif
+                    @if ($product->image)
+                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-96 object-cover rounded-lg">
+                    @else
+                        <div class="w-full h-96 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400">
+                            <i class="fa-solid fa-image text-4xl"></i>
+                        </div>
+                    @endif
 
                 <div>
                     <h1 class="text-2xl font-bold text-gray-900">{{ $product->name }}</h1>
@@ -29,11 +29,11 @@
                         </div>
                         <div class="bg-gray-50 rounded-lg px-3 py-2">
                             <p class="text-gray-400 text-xs">Kategori Usia</p>
-                            <p class="font-medium text-gray-800">{{ ucfirst($product->age_category) }}</p>
+                            <p class="font-medium text-gray-800">{{ $product->age_category ? ucfirst($product->age_category) : 'Semua Usia' }}</p>
                         </div>
                         <div class="bg-gray-50 rounded-lg px-3 py-2">
-                            <p class="text-gray-400 text-xs">Jenis Kelamin</p>
-                            <p class="font-medium text-gray-800">{{ ucfirst($product->gender) }}</p>
+                            <p class="text-gray-400 text-xs">Gender</p>
+                            <p class="font-medium text-gray-800">{{ $product->gender ? ucfirst($product->gender) : 'Semua Gender' }}</p>
                         </div>
                         <div class="bg-gray-50 rounded-lg px-3 py-2">
                             <p class="text-gray-400 text-xs">Stok</p>

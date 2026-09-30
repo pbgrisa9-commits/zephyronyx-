@@ -36,12 +36,6 @@
                         <i class="fa-solid fa-receipt text-lg"></i>
                     </a>
 
-                    <!-- Notifikasi -->
-                    <button type="button" onclick="showNotifications()" class="relative text-slate-300 hover:text-white transition-colors" title="Notifikasi">
-                        <i class="fa-regular fa-bell text-lg"></i>
-                        <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-                    </button>
-
                     <!-- Profile Dropdown -->
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
@@ -58,13 +52,9 @@
                         </x-slot>
                         <x-slot name="content">
                             <x-dropdown-link :href="route('profile.edit')">{{ __('Profile') }}</x-dropdown-link>
-                            <x-dropdown-link :href="route('orders.index')">{{ __('Pesanan Saya') }}</x-dropdown-link>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
-                                    {{ __('Logout') }}
-                                </x-dropdown-link>
-                            </form>
+                            <button type="button" onclick="confirmLogout()" class="w-full text-left block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 transition-colors">
+                                {{ __('Logout') }}
+                            </button>
                         </x-slot>
                     </x-dropdown>
                 @else
@@ -113,15 +103,34 @@
                     {{ __('Profil') }}
                 </x-responsive-nav-link>
 
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault(); this.closest('form').submit();" class="!text-slate-300">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
+                <button type="button" onclick="confirmLogout()" class="w-full text-left px-4 py-2 text-base font-medium text-slate-300 hover:bg-slate-800 transition-colors">
+                    {{ __('Logout') }}
+                </button>
             </div>
         </div>
         @endauth
     </div>
+
+    <form id="logout-form" method="POST" action="{{ route('logout') }}" class="hidden">
+        @csrf
+    </form>
 </nav>
+
+<script>
+    function confirmLogout() {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Yakin ingin logout?',
+            text: 'Kamu akan keluar dari akunmu.',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Logout',
+            cancelButtonText: 'Batal',
+            reserveButtons: true,
+            width: '400px'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('logout-form').submit();
+            }
+        });
+    }
+</script>
